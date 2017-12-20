@@ -1,0 +1,23 @@
+{
+  "name": "exercises-for-programmers-nodejs",
+  "version": "1.0.0",
+  "description": "just doing some coding exercises",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs/issues"
+  },
+  "homepage": "https://github.com/jeremy-j-ackso/exercises-for-programmers-nodejs#readme",
+  "dependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^4.0.1"
+  }
+}
