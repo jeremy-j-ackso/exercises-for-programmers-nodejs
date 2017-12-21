@@ -27,7 +27,6 @@ function tipCalculator(billAmount, tipRate) {
     )
   }
 
-  // tipPerc = tipPerc / 100
   tipPerc /= 100
 
   let tip = parseFloat((bill * tipPerc).toFixed(2))
