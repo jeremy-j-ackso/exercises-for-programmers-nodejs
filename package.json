@@ -4,7 +4,7 @@
   "description": "just doing some coding exercises",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --watch --inline-diffs"
   },
   "repository": {
     "type": "git",
