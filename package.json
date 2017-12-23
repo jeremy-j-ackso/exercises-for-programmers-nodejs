@@ -26,6 +26,8 @@
   },
   "bin": {
     "hello": "./ch2/hello.js",
-    "countChars": "./ch2/countChars.js"
+    "countChars": "./ch2/countChars.js",
+    "quote-js": "./ch2/quote.js",
+    "madlib-js": "./ch2/madlib.js"
   }
 }
