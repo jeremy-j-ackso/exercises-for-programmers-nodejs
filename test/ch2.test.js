@@ -7,6 +7,7 @@ const countChars = require('../ch2/ex2.js')
 const quote = require('../ch2/ex3.js')
 const madlib = require('../ch2/ex4.js')
 const simplemath = require('../ch2/ex5.js')
+const retirement = require('../ch2/ex6.js')
 
 describe('ch2', () => {
   describe('ex1.js', () => {
@@ -162,6 +163,44 @@ describe('ch2', () => {
       ]
       err_test.forEach((test) => {
         expect(simplemath).withArgs(test.args[0], test.args[1]).to.throwError('inputs must be digits')
+      })
+    })
+
+    it('should throw an error if the input is actually a number and not a string', () => {
+      const err_test = [
+        { args: [1, 1] },
+        { args: ['one', 1] },
+        { args: [1, 'one'] },
+      ]
+      err_test.forEach((test) => {
+        expect(simplemath).withArgs(test.args[0], test.args[1]).to.throwError('inputs must be digits')
+      })
+    })
+
+    it('should throw an error if inputs are null or undefined', () => {
+      const err_test = [
+        { args: [,] },
+        { args: [undefined,] },
+        { args: [, undefined] },
+        { args: [undefined, undefined] },
+        { args: [null,] },
+        { args: [, null] },
+        { args: [null, null] },
+      ]
+      err_test.forEach((test) => {
+        expect(simplemath).withArgs(test.args[0], test.args[1]).to.throwError('inputs must be digits')
+      })
+    })
+  })
+
+  describe('ex6.js', () => {
+    it('should return values equal to reference', () => {
+      const ref_test = [
+        { args: ['20', '40'], expect: 'You have 20 years left until you can retire.\nIt\'s 2017, so you can retire in 2037.' },
+        { args: ['20', '60'], expect: 'You have 40 years left until you can retire.\nIt\'s 2017, so you can retire in 2057.' },
+      ]
+      ref_test.forEach((test) => {
+        expect(retirement(test.args[0], test.args[1])).to.equal(test.expect)
       })
     })
 
