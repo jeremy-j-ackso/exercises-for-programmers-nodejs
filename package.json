@@ -25,8 +25,8 @@
     "eslint-plugin-import": "^2.8.0"
   },
   "bin": {
-    "hello": "./ch2/hello.js",
-    "countChars": "./ch2/countChars.js",
+    "hello-js": "./ch2/hello.js",
+    "countChars-js": "./ch2/countChars.js",
     "quote-js": "./ch2/quote.js",
     "madlib-js": "./ch2/madlib.js",
     "simplemath-js": "./ch2/simplemath.js",
