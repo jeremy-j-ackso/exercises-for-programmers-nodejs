@@ -28,6 +28,7 @@
     "hello": "./ch2/hello.js",
     "countChars": "./ch2/countChars.js",
     "quote-js": "./ch2/quote.js",
-    "madlib-js": "./ch2/madlib.js"
+    "madlib-js": "./ch2/madlib.js",
+    "simplemath-js": "./ch2/simplemath.js"
   }
 }
