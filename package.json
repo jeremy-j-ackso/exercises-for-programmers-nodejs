@@ -31,6 +31,7 @@
     "madlib-js": "./ch2/madlib.js",
     "simplemath-js": "./ch2/simplemath.js",
     "retirement-js": "./ch2/retirement.js",
-    "areaOfRectangleRoom-js": "./ch3/area-of-rectangle-room.js"
+    "areaOfRectangleRoom-js": "./ch3/area-of-rectangle-room.js",
+    "pizzaParty-js": "./ch3/pizza-party.js"
   }
 }

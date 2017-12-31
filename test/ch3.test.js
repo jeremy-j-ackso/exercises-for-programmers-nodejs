@@ -7,6 +7,12 @@ const {
   sqmeters,
   areaOfRectangle,
 } = require('../ch3/ex7.js')
+const {
+  remainingPieces,
+  piecesPerPerson,
+  aboutTheParty,
+  pluralizer,
+} = require('../ch3/ex8.js')
 
 // require() in the exercises here
 
@@ -195,6 +201,247 @@ describe('ch3', () => {
         ]
         err_test.forEach((test) => {
           expect(sqmeters).withArgs(test.args[0], test.args[1]).to.throwError('inputs must not be null or undefined')
+        })
+      })
+    })
+  })
+
+  describe('ex8.js', () => {
+    describe('pluralizer()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['people', '1'], expect: 'person' },
+          { args: ['people', '2'], expect: 'people' },
+          { args: ['people', '3'], expect: 'people' },
+          { args: ['pizzas', '1'], expect: 'pizza' },
+          { args: ['pizzas', '2'], expect: 'pizzas' },
+          { args: ['pizzas', '3'], expect: 'pizzas' },
+          { args: ['pieces', '1'], expect: 'piece' },
+          { args: ['pieces', '2'], expect: 'pieces' },
+          { args: ['pieces', '3'], expect: 'pieces' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(pluralizer(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the type is not one of [\'people\', \'pizzas\', \'pieces\']', () => {
+        const err_test = [
+          { args: ['one', '1'] },
+          { args: [null, '1'] },
+          { args: [undefined, '1'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(pluralizer).withArgs(test.args[0], test.args[1]).to.throwError('type must be one of [\'person\', \'pizzas\', \'pieces\']')
+        })
+      })
+
+      it('should throw an error if the val is not a parseable integer digit provided as a string', () => {
+        const err_test = [
+          { args: ['people', '1.2'] },
+          { args: ['people', '123.456'] },
+          { args: ['people', 1.2] },
+          { args: ['people', 123.456] },
+          { args: ['people', 1] },
+          { args: ['people', 2] },
+          { args: ['people', 3] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(pluralizer).withArgs(test.args[0], test.args[1]).to.throwError('val must be a parseable integer digit')
+        })
+      })
+    })
+
+    describe('aboutTheParty()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['1', '1', '1'], expect: '1 person with 1 pizza, each pizza having 1 piece' },
+          { args: ['8', '1', '1'], expect: '8 people with 1 pizza, each pizza having 1 piece' },
+          { args: ['8', '2', '1'], expect: '8 people with 2 pizzas, each pizza having 1 piece' },
+          { args: ['8', '1', '4'], expect: '8 people with 1 pizza, each pizza having 4 pieces' },
+          { args: ['9', '1', '4'], expect: '9 people with 1 pizza, each pizza having 4 pieces' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(aboutTheParty(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the arguments are not provided as strings', () => {
+        const err_test = [
+          { args: [1, '1', '1'] },
+          { args: ['1', 1, '1'] },
+          { args: ['1', '1', 1] },
+          { args: [1, 1, '1'] },
+          { args: [1, '1', 1] },
+          { args: ['1', 1, 1] },
+          { args: [1, 1, 1] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments to this function must be provided as strings')
+        })
+      })
+
+      it('should throw an error if the arguments are not parseable integer digits', () => {
+        const err_test = [
+          { args: [, '1', '1'] },
+          { args: ['one', '1', '1'] },
+          { args: [null, '1', '1'] },
+          { args: [undefined, '1', '1'] },
+          { args: ['1',, '1'] },
+          { args: ['1', 'one', '1'] },
+          { args: ['1', null, '1'] },
+          { args: ['1', undefined, '1'] },
+          { args: ['1', '1',] },
+          { args: ['1', '1', 'one'] },
+          { args: ['1', '1', null] },
+          { args: ['1', '1', undefined] },
+          { args: ['1',,] },
+          { args: [, '1',] },
+          { args: [,, '1'] },
+          { args: ['1', null, null] },
+          { args: ['1', undefined, undefined] },
+          { args: [null, '1', null] },
+          { args: [undefined, '1', undefined] },
+          { args: [null, null, '1'] },
+          { args: [undefined, undefined, '1'] },
+          { args: [,,] },
+          { args: [null, null, null] },
+          { args: [undefined, undefined, undefined] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments must be parseable integer digits')
+        })
+      })
+    })
+
+    describe('piecesPerPerson()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['8', '2', '8'], expect: 'Each person gets 2 pieces of pizza.' },
+          { args: ['8', '2', '9'], expect: 'Each person gets 2 pieces of pizza.' },
+          { args: ['6', '2', '9'], expect: 'Each person gets 3 pieces of pizza.' },
+          { args: ['6', '2', '8'], expect: 'Each person gets 2 pieces of pizza.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(piecesPerPerson(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the arguments are not provided as strings', () => {
+        const err_test = [
+          { args: [1, '1', '1'] },
+          { args: ['1', 1, '1'] },
+          { args: ['1', '1', 1] },
+          { args: [1, 1, '1'] },
+          { args: [1, '1', 1] },
+          { args: ['1', 1, 1] },
+          { args: [1, 1, 1] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments to this function must be provided as strings')
+        })
+      })
+
+      it('should throw an error if the arguments are not parseable integer digits', () => {
+        const err_test = [
+          { args: [, '1', '1'] },
+          { args: ['one', '1', '1'] },
+          { args: [null, '1', '1'] },
+          { args: [undefined, '1', '1'] },
+          { args: ['1',, '1'] },
+          { args: ['1', 'one', '1'] },
+          { args: ['1', null, '1'] },
+          { args: ['1', undefined, '1'] },
+          { args: ['1', '1',] },
+          { args: ['1', '1', 'one'] },
+          { args: ['1', '1', null] },
+          { args: ['1', '1', undefined] },
+          { args: ['1',,] },
+          { args: [, '1',] },
+          { args: [,, '1'] },
+          { args: ['1', null, null] },
+          { args: ['1', undefined, undefined] },
+          { args: [null, '1', null] },
+          { args: [undefined, '1', undefined] },
+          { args: [null, null, '1'] },
+          { args: [undefined, undefined, '1'] },
+          { args: [,,] },
+          { args: [null, null, null] },
+          { args: [undefined, undefined, undefined] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments must be parseable integer digits')
+        })
+      })
+    })
+
+    describe('remainingPieces()', () => {
+      it('should provide outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['8', '2', '9'], expect: 'There are 2 leftover pieces.' },
+          { args: ['3', '1', '7'], expect: 'There is 1 leftover piece.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(remainingPieces(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the arguments are not provided as strings', () => {
+        const err_test = [
+          { args: [1, '1', '1'] },
+          { args: ['1', 1, '1'] },
+          { args: ['1', '1', 1] },
+          { args: [1, 1, '1'] },
+          { args: [1, '1', 1] },
+          { args: ['1', 1, 1] },
+          { args: [1, 1, 1] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments to this function must be provided as strings')
+        })
+      })
+
+      it('should throw an error if the arguments are not parseable integer digits', () => {
+        const err_test = [
+          { args: [, '1', '1'] },
+          { args: ['one', '1', '1'] },
+          { args: [null, '1', '1'] },
+          { args: [undefined, '1', '1'] },
+          { args: ['1',, '1'] },
+          { args: ['1', 'one', '1'] },
+          { args: ['1', null, '1'] },
+          { args: ['1', undefined, '1'] },
+          { args: ['1', '1',] },
+          { args: ['1', '1', 'one'] },
+          { args: ['1', '1', null] },
+          { args: ['1', '1', undefined] },
+          { args: ['1',,] },
+          { args: [, '1',] },
+          { args: [,, '1'] },
+          { args: ['1', null, null] },
+          { args: ['1', undefined, undefined] },
+          { args: [null, '1', null] },
+          { args: [undefined, '1', undefined] },
+          { args: [null, null, '1'] },
+          { args: [undefined, undefined, '1'] },
+          { args: [,,] },
+          { args: [null, null, null] },
+          { args: [undefined, undefined, undefined] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments must be parseable integer digits')
         })
       })
     })
