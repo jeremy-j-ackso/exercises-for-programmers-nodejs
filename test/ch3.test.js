@@ -13,8 +13,19 @@ const {
   aboutTheParty,
   pluralizer,
 } = require('../ch3/ex8.js')
-
-// require() in the exercises here
+const {
+  paintCalculator,
+  dimensions_paint,
+} = require('../ch3/ex9.js')
+const {
+  selfCheckout,
+  itemSubtotal,
+  billSubtotal,
+  tax,
+  total,
+  isStringedNumber,
+  outputBuilder,
+} = require('../ch3/ex10.js')
 
 describe('ch3', () => {
   describe('ex7.js', () => {
@@ -442,6 +453,300 @@ describe('ch3', () => {
 
         err_test.forEach((test) => {
           expect(aboutTheParty).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('arguments must be parseable integer digits')
+        })
+      })
+    })
+  })
+
+  describe('ex9.js', () => {
+    describe('dimensions_paint()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['1', '350'], expect: 350 },
+          { args: ['1', '360'], expect: 360 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(dimensions_paint(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the argument is not a parseable number provided as a string', () => {
+        const err_test = [
+          { args: ['1', 'three hundred fifty'] },
+          { args: ['three hundred fifty', '1'] },
+          { args: ['1', '1.2.3'] },
+          { args: ['1.2.3', '1'] },
+          { args: ['1', ''] },
+          { args: ['', '1'] },
+          { args: ['1', undefined] },
+          { args: [undefined, '1'] },
+          { args: ['1', null] },
+          { args: [null, '1'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(dimensions_paint).withArgs(test.args[0], test.args[1]).to.throwError('sqft must be a parseable number provided as a string')
+        })
+      })
+    })
+
+    describe('paintCalculator()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['1', '350'], expect: 1 },
+          { args: ['1', '360'], expect: 2 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(paintCalculator(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the argument is not a parseable number provided as a string', () => {
+        const err_test = [
+          { args: ['1', 'three hundred fifty'] },
+          { args: ['three hundred fifty', '1'] },
+          { args: ['1', '1.2.3'] },
+          { args: ['1.2.3', '1'] },
+          { args: ['1', ''] },
+          { args: ['', '1'] },
+          { args: ['1', undefined] },
+          { args: [undefined, '1'] },
+          { args: ['1', null] },
+          { args: [null, '1'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(paintCalculator).withArgs(test.args[0], test.args[1]).to.throwError('sqft must be a parseable number provided as a string')
+        })
+      })
+    })
+  })
+
+  describe('ex10.js', () => {
+    describe('itemSubtotal()', () => {
+      it('should produce outpus equal to reference', () => {
+        const ref_test = [
+          { args: ['1.00', '1'], expect: 1.00 },
+          { args: ['2.00', '1'], expect: 2.00 },
+          { args: ['2.00', '4'], expect: 8.00 },
+          { args: ['2.02', '4'], expect: 8.08 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(itemSubtotal(test.args[0], test.args[1])).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('billSubtotal()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: [1.00, 2.00, 3.00], expect: '6.00' },
+          { args: [1.00, 2.32, 3.75], expect: '7.07' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(billSubtotal(test.args)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('tax()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: 100.00, expect: '5.50' },
+          { args: 101.00, expect: '5.55' },
+          { args: 3.64, expect: '0.20' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(tax(test.args)).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('total()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: [100.00, 5.50], expect: '105.50' },
+          { args: [101.00, 5.55], expect: '106.55' },
+          { args: [3.64, 0.20], expect: '3.84' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(total(test.args[0], test.args[1])).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('isStringedNumber()', () => {
+      it('should return true on valid inputs', () => {
+        const valid_input = [
+          { args: ['1', 'money'] },
+          { args: ['1.24', 'money'] },
+          { args: ['100.39', 'money'] },
+          { args: ['1', 'quantity'] },
+          { args: ['10', 'quantity'] },
+        ]
+
+        valid_input.forEach((test) => {
+          expect(isStringedNumber(test.args[0], test.args[1])).to.be.ok()
+        })
+      })
+
+      it('should throw an error if type is not in [\'money\', \'quantity\']', () => {
+        const err_test = [
+          { args: ['1', 'bob'] },
+          { args: ['1', null] },
+          { args: ['1', undefined] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(isStringedNumber).withArgs(test.args[0], test.args[1]).to.throwError('type must be one of [\'money\', \'quantity\']')
+        })
+      })
+
+      it('should throw an error if the price is neither an integer or number with two decimal places, provided as a string', () => {
+        const err_test = [
+          { args: ['1.2.3', 'money'] },
+          { args: ['one dollar, 25 cents', 'money'] },
+          { args: [1.24, 'money'] },
+          { args: [1, 'money'] },
+          { args: [null, 'money'] },
+          { args: [undefined, 'money'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(isStringedNumber).withArgs(test.args[0], test.args[1]).to.throwError('price must be a string digit, either as an integer, or with two decimal places')
+        })
+      })
+
+      it('should throw an error if the quantity is not an integer delivered as a string', () => {
+        const err_test = [
+          { args: ['1.2.3', 'quantity'] },
+          { args: ['one hundred 25', 'quantity'] },
+          { args: ['1.24', 'quantity'] },
+          { args: [1, 'quantity'] },
+          { args: [null, 'quantity'] },
+          { args: [undefined, 'quantity'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(isStringedNumber).withArgs(test.args[0], test.args[1]).to.throwError('quantity must be a string integer')
+        })
+      })
+    })
+
+    describe('outputBuilder()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          { args: ['1.00', '1.00', '1.00'], expect: 'Subtotal: $1.00\nTax: $1.00\nTotal: $1.00' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(outputBuilder(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('selfCheckout()', () => {
+      it('should produce outputs equal to reference', () => {
+        const ref_test = [
+          {
+            args: {
+              item1: { price: '1', qty: '1', },
+              item2: { price: '1', qty: '1', },
+              item3: { price: '1', qty: '1', },
+            },
+            expect: 'Subtotal: $3.00\nTax: $0.17\nTotal: $3.17'
+          }, {
+            args: {
+              item1: { price: '2.31', qty: '31', },
+              item2: { price: '9.99', qty: '1', },
+              item3: { price: '1000', qty: '13', },
+            },
+            expect: 'Subtotal: $13081.60\nTax: $719.49\nTotal: $13801.09'
+          },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(selfCheckout(test.args)).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error if the input object does not contain exactly three items with keys [\'item1\', \'item2\', \'item3\']', () => {
+        const err_test = [
+          {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', },
+              item4: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', },
+              item3: { price: '20', qty: '2', },
+              item4: { price: '20', qty: '2', },
+            },
+          },
+        ]
+
+        err_test.forEach((test) => {
+          expect(selfCheckout).withArgs(test.args).to.throwError('input must be an object with three properties such that input.keys() === [\'item1\', \'item2\', \'item3\']')
+        })
+      })
+
+      it('should throw an error if the items contain anything other than a price and qty', () => {
+        const err_test = [
+          {
+            args: {
+              item1: { price: '20', },
+              item2: { price: '20', qty: '2', },
+              item3: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', },
+              item3: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', },
+              item3: { price: '20', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', color: 'blue' },
+              item2: { price: '20', qty: '2', },
+              item3: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', color: 'blue' },
+              item3: { price: '20', qty: '2', },
+            },
+          }, {
+            args: {
+              item1: { price: '20', qty: '2', },
+              item2: { price: '20', qty: '2', },
+              item3: { price: '20', qty: '2', color: 'blue' },
+            },
+          },
+        ]
+
+        err_test.forEach((test) => {
+          expect(selfCheckout).withArgs(test.args).to.throwError('each item must have a price and qty and no other properties')
         })
       })
     })
