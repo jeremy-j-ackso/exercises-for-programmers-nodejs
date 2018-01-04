@@ -196,8 +196,8 @@ describe('ch2', () => {
   describe('ex6.js', () => {
     it('should return values equal to reference', () => {
       const ref_test = [
-        { args: ['20', '40'], expect: 'You have 20 years left until you can retire.\nIt\'s 2017, so you can retire in 2037.' },
-        { args: ['20', '60'], expect: 'You have 40 years left until you can retire.\nIt\'s 2017, so you can retire in 2057.' },
+        { args: ['20', '40'], expect: 'You have 20 years left until you can retire.\nIt\'s 2018, so you can retire in 2038.' },
+        { args: ['20', '60'], expect: 'You have 40 years left until you can retire.\nIt\'s 2018, so you can retire in 2058.' },
       ]
       ref_test.forEach((test) => {
         expect(retirement(test.args[0], test.args[1])).to.equal(test.expect)
