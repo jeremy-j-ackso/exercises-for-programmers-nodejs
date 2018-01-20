@@ -44,6 +44,12 @@ const {
   buildSIstring,
 } = require('../ch3/ex12.js')
 
+const {
+  compound_interest,
+  checkCIinputs,
+  buildCIstring,
+} = require('../ch3/ex13.js')
+
 describe('ch3', () => {
   describe('ex7.js', () => {
     describe('areaOfRectangle()', () => {
@@ -854,7 +860,7 @@ describe('ch3', () => {
     })
   })
 
-  describe('ex13.js', () => {
+  describe('ex12.js', () => {
     describe('simpleInterest()', () => {
       it('should produce values equal to reference', () => {
         let ref_test = [
@@ -912,6 +918,71 @@ describe('ch3', () => {
 
         ref_test.forEach((test) => {
           expect(buildSIstring(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex13.js', () => {
+    describe('compound_interest()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [1500, 4.3, 6, 4], expect: '1938.84' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(compound_interest(test.args[0], test.args[1],test.args[2],test.args[3]))
+            .to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('checkCIinputs()', () => {
+      it('should return `true` on valid inputs', () => {
+        let true_test = [
+          { args: '111' },
+          { args: '1.11' },
+        ]
+
+        true_test.forEach((test) => {
+          expect(checkCIinputs(test.args)).to.be.ok()
+        })
+      })
+
+      it('should throw error if the input amount is not a string', () => {
+        let err_test = [
+          { args: 123 },
+          { args: 1.23 },
+          { args: [1.23] },
+          { args: { key: 1.23 } },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkCIinputs).withArgs(test.args).to.throwError('input amount must be delivered as a string')
+        })
+      })
+
+      it('should throw error if the input is not parseable to a number', () => {
+        let err_test = [
+          { args: 'one two three' },
+          { args: '1.2.3' },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkCIinputs).withArgs(test.args).to.throwError('input must be parseable as a number')
+        })
+      })
+    })
+
+    describe('buildCIstring()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['1500', '4.3', '6', '4'], expect: '$1500 invested at 4.3% for 6 years compounded 4 times per year is $1938.84' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(buildCIstring(test.args[0], test.args[1], test.args[2], test.args[3]))
+            .to.equal(test.expect)
         })
       })
     })
