@@ -1,22 +1,27 @@
-/* eslint no-undef: "off", no-sparse-arrays: "off", comma-spacing: "off", comma-dangle: "off" */
+/* eslint no-sparse-arrays: "off", comma-spacing: "off", comma-dangle: "off" */
+/* global describe, it */
 
 const expect = require('expect.js')
+
 const {
   dimensions,
   sqft,
   sqmeters,
   areaOfRectangle,
 } = require('../ch3/ex7.js')
+
 const {
   remainingPieces,
   piecesPerPerson,
   aboutTheParty,
   pluralizer,
 } = require('../ch3/ex8.js')
+
 const {
   paintCalculator,
   dimensions_paint,
 } = require('../ch3/ex9.js')
+
 const {
   selfCheckout,
   itemSubtotal,
@@ -26,6 +31,12 @@ const {
   isStringedNumber,
   outputBuilder,
 } = require('../ch3/ex10.js')
+
+const {
+  calculateConversion,
+  checkInput,
+  buildConversion,
+} = require('../ch3/ex11.js')
 
 describe('ch3', () => {
   describe('ex7.js', () => {
@@ -747,6 +758,91 @@ describe('ch3', () => {
 
         err_test.forEach((test) => {
           expect(selfCheckout).withArgs(test.args).to.throwError('each item must have a price and qty and no other properties')
+        })
+      })
+    })
+  })
+
+  describe('ex11.js', () => {
+    describe('calculateConversion()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [81, 137.51, 98.24], expect: '113.38' },
+          { args: [1, 1, 1], expect: '1.00' },
+          { args: [2, 2, 2], expect: '2.00' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(calculateConversion(test.args[0], test.args[1], test.args[2]))
+            .to.equal(test.expect)
+        })
+      })
+
+      it('should produce erros on invalid inputs', () => {
+        let err_test = [
+          { args: ['1.23', 1, 1] },
+          { args: [1, '1.23', 1] },
+          { args: [1, 1, '1.23'] },
+          { args: ['1.2.3.', 1, 1] },
+          { args: [1, '1.2.3.', 1] },
+          { args: [1, 1, '1.2.3.'] },
+          { args: ['abc.', 1, 1] },
+          { args: [1, 'abc.', 1] },
+          { args: [1, 1, 'abc.'] },
+        ]
+
+        err_test.forEach((test) => {
+          expect(calculateConversion).withArgs(test.args[0], test.args[1], test.args[2]).to.throwError('all inputs must be numeric')
+        })
+      })
+    })
+
+    describe('checkInput()', () => {
+      it('should return `true` on valid input', () => {
+        let true_test = [
+          { args: '111' },
+          { args: '1.11' },
+        ]
+
+        true_test.forEach((test) => {
+          expect(checkInput(test.args)).to.be.ok()
+        })
+      })
+
+      it('should throw error if the input amount is not a string', () => {
+        let err_test = [
+          { args: 123 },
+          { args: 1.23 },
+          { args: [1.23] },
+          { args: { key: 1.23 } },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkInput).withArgs(test.args).to.throwError('input amount must be delivered as a string')
+        })
+      })
+
+      it('should throw error if the input is not parseable to a number', () => {
+        let err_test = [
+          { args: 'one two three' },
+          { args: '1.2.3' },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkInput).withArgs(test.args).to.throwError('input must be parseable as a number')
+        })
+      })
+    })
+
+    describe('buildConversion()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['81', '137.51'], expect: '81 euros at an exchange rate of 137.51 is 113.38 US dollars' },
+          { args: ['1', '137.51'], expect: '1 euros at an exchange rate of 137.51 is 1.40 US dollars' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(buildConversion(test.args[0], test.args[1])).to.equal(test.expect)
         })
       })
     })
