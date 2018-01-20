@@ -38,6 +38,12 @@ const {
   buildConversion,
 } = require('../ch3/ex11.js')
 
+const {
+  simpleInterest,
+  checkSIinputs,
+  buildSIstring,
+} = require('../ch3/ex12.js')
+
 describe('ch3', () => {
   describe('ex7.js', () => {
     describe('areaOfRectangle()', () => {
@@ -843,6 +849,69 @@ describe('ch3', () => {
 
         ref_test.forEach((test) => {
           expect(buildConversion(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex13.js', () => {
+    describe('simpleInterest()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [1500, 4.3, 4], expect: '1758.00' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(simpleInterest(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('checkSIinputs()', () => {
+      it('should return `true` on valid inputs', () => {
+        let true_test = [
+          { args: '111' },
+          { args: '1.11' },
+        ]
+
+        true_test.forEach((test) => {
+          expect(checkSIinputs(test.args)).to.be.ok()
+        })
+      })
+
+      it('should throw error if the input amount is not a string', () => {
+        let err_test = [
+          { args: 123 },
+          { args: 1.23 },
+          { args: [1.23] },
+          { args: { key: 1.23 } },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkSIinputs).withArgs(test.args).to.throwError('input amount must be delivered as a string')
+        })
+      })
+
+      it('should throw error if the input is not parseable to a number', () => {
+        let err_test = [
+          { args: 'one two three' },
+          { args: '1.2.3' },
+        ]
+
+        err_test.forEach((test) => {
+          expect(checkSIinputs).withArgs(test.args).to.throwError('input must be parseable as a number')
+        })
+      })
+    })
+
+    describe('buildSIstring()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['1500', '4.3', '4'], expect: 'After 4 years at 4.3%, the investment will be worth $1758.00.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(buildSIstring(test.args[0], test.args[1], test.args[2])).to.equal(test.expect)
         })
       })
     })

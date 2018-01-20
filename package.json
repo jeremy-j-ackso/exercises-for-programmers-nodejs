@@ -34,6 +34,8 @@
     "areaOfRectangleRoom-js": "./ch3/area-of-rectangle-room.js",
     "pizzaParty-js": "./ch3/pizza-party.js",
     "paintCalc-js": "./ch3/paintCalc.js",
-    "selfCheckout-js": "./ch3/self-checkout.js"
+    "selfCheckout-js": "./ch3/self-checkout.js",
+    "currencyConversion-js": "./ch3/currencyConversion.js",
+    "simpleInterest-js": "./ch3/simple-interest.js"
   }
 }

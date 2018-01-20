@@ -1,10 +1,8 @@
-/* eslint no-restricted-globals: "off" */
-
 function checkInput(value) {
   if (typeof value !== 'string') {
     throw new Error('input amount must be delivered as a string')
   }
-  if (isNaN(parseFloat(value)) || /\d+\.\d+\.\d+/.test(value)) {
+  if (Number.isNaN(parseFloat(value)) || /\d+\.\d+\.\d+/.test(value)) {
     throw new Error('input must be parseable as a number')
   }
   return true
