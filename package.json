@@ -37,6 +37,7 @@
     "selfCheckout-js": "./ch3/self-checkout.js",
     "currencyConversion-js": "./ch3/currencyConversion.js",
     "simpleInterest-js": "./ch3/simple-interest.js",
-    "compoundInterest-js": "./ch3/compound-interest.js"
+    "compoundInterest-js": "./ch3/compound-interest.js",
+    "taxCalculator-js": "./ch3/tax-calculator.js"
   }
 }
