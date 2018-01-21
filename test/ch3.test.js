@@ -988,17 +988,3 @@ describe('ch3', () => {
     })
   })
 })
-
-/*
-  describe('exX.js', () => {
-    it('should do something', () => {
-      expect(1).to.equal(1)
-      // something
-    })
-
-    it('should not do something', () => {
-      expect(1).not.to.equal(2)
-      // not something
-    })
-  })
-*/
