@@ -1,0 +1,13 @@
+digraph TC {
+  node [shape=box]; order_amt; state; calc_tax; no_tax; display_subtotal; display_tax; display_total;
+  node [shape=diamond]; is_wi;
+
+  order_amt -> state
+  state -> is_wi
+  is_wi -> calc_tax [label="true"]
+  is_wi -> no_tax [label="false"]
+  calc_tax -> display_subtotal
+  display_subtotal -> display_tax
+  display_tax -> display_total
+  no_tax -> display_total
+}
