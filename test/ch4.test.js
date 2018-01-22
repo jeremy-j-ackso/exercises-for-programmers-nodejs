@@ -9,6 +9,11 @@ const {
   buildTCstring,
 } = require('../ch4/ex14.js')
 
+const {
+  buildResponse,
+  validateInput,
+} = require('../ch4/ex15.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -67,6 +72,34 @@ describe('Chapter 4', () => {
 
         ref_test.forEach((test) => {
           expect(buildTCstring(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex15.js', () => {
+    describe('validateInput()', () => {
+      it('should return `true` on validation', () => {
+        expect(validateInput('abc$123')).to.be.ok()
+      })
+
+      it('should return `false` on a failed validation', () => {
+        let false_test = ['123456', 'abcdefgh']
+        false_test.forEach((test) => {
+          expect(validateInput(test)).to.not.be.ok()
+        })
+      })
+    })
+
+    describe('buildResponse()', () => {
+      it('should return `Welcome!` on validation', () => {
+        expect(buildResponse('abc$123')).to.equal('Welcome!')
+      })
+
+      it('should return `I don\'t know you!` on failure to validate', () => {
+        let false_test = ['123456', 'abcdefgh']
+        false_test.forEach((test) => {
+          expect(validateInput(test)).to.not.be.equal('I don\'t know you!')
         })
       })
     })

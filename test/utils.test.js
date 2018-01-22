@@ -5,6 +5,7 @@ const expect = require('expect.js')
 
 const check_numeric_strings = require('../utils/check-numeric-strings.js')
 const check_number = require('../utils/check-number.js')
+const check_string = require('../utils/check-string.js')
 
 describe('Test Utilities', () => {
   describe('check_numeric_strings()', () => {
@@ -60,6 +61,27 @@ describe('Test Utilities', () => {
       ]
       err_test.forEach((test) => {
         expect(check_number).withArgs(test.args[0], test.args[1]).to.throwError(test.expect)
+      })
+    })
+  })
+
+  describe('check_string()', () => {
+    it('should return `true` when given a string', () => {
+      let return_test = ['one two three', '1.2.3', '1.2']
+
+      return_test.forEach((test) => {
+        expect(check_string(test, '')).to.be.ok()
+      })
+    })
+
+    it('should throw an error when given non-string input', () => {
+      let err_test = [
+        { args: [1, 'fake_function'], expect: 'input to fake_function() must be a string' },
+        { args: [1.111, 'some_other_fake_function'], expect: 'input to some_other_fake_function() must be a string' },
+        { args: [1111, 'yet_another_fake_function'], expect: 'input to yet_another_fake_function() must be a string' },
+      ]
+      err_test.forEach((test) => {
+        expect(check_string).withArgs(test.args[0], test.args[1]).to.throwError(test.expect)
       })
     })
   })
