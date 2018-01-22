@@ -39,6 +39,7 @@
     "simpleInterest-js": "./ch3/simple-interest.js",
     "compoundInterest-js": "./ch3/compound-interest.js",
     "taxCalculator-js": "./ch4/tax-calculator.js",
-    "passwordValidation-js": "./ch4/password-validation.js"
+    "passwordValidation-js": "./ch4/password-validation.js",
+    "legalDrivingAge-js": "./ch4/legal-driving-age.js"
   }
 }

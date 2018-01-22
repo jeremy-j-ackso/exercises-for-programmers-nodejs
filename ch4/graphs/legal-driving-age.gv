@@ -1,0 +1,13 @@
+digraph LDA {
+  node [shape=box]; take_input; error; convert_to_float; can_drive; can_not_drive; write_output;
+  node [shape=diamond]; check_numeric_string; check_against_16;
+
+  take_input -> check_numeric_string
+  check_numeric_string -> convert_to_float [label="true"]
+  check_numeric_string -> error [label="false"]
+  convert_to_float -> check_against_16
+  check_against_16 -> can_drive [label=">="]
+  check_against_16 -> can_not_drive [label="<"]
+  can_drive -> write_output
+  can_not_drive -> write_output
+}

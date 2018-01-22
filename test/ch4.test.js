@@ -14,6 +14,11 @@ const {
   validateInput,
 } = require('../ch4/ex15.js')
 
+const {
+  validate16,
+  build16string,
+} = require('../ch4/ex16.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -100,6 +105,44 @@ describe('Chapter 4', () => {
         let false_test = ['123456', 'abcdefgh']
         false_test.forEach((test) => {
           expect(validateInput(test)).to.not.be.equal('I don\'t know you!')
+        })
+      })
+    })
+  })
+
+  describe('ex16.js', () => {
+    describe('validate16()', () => {
+      it('should return `true` for all values >= 16', () => {
+        let true_test = [16, 17, 18, 1000]
+
+        true_test.forEach((test) => {
+          expect(validate16(test)).to.be.ok()
+        })
+      })
+
+      it('should return `false` for all values < 16', () => {
+        let false_test = [15.99, 15, 4, 0]
+
+        false_test.forEach((test) => {
+          expect(validate16(test)).to.not.be.ok()
+        })
+      })
+    })
+
+    describe('build16string()', () => {
+      it('when >=16 should return a string informing user they are old enough to drive', () => {
+        let true_test = ['16', '17', '18', '1000']
+
+        true_test.forEach((test) => {
+          expect(build16string(test)).to.equal('You are old enough to legally drive.')
+        })
+      })
+
+      it('when <16 should return a string informing user they are old enough to drive', () => {
+        let false_test = ['15.99', '15', '4', '0']
+
+        false_test.forEach((test) => {
+          expect(build16string(test)).to.equal('You are not old enough to legally drive.')
         })
       })
     })
