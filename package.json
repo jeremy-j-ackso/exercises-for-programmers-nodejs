@@ -40,6 +40,7 @@
     "compoundInterest-js": "./ch3/compound-interest.js",
     "taxCalculator-js": "./ch4/tax-calculator.js",
     "passwordValidation-js": "./ch4/password-validation.js",
-    "legalDrivingAge-js": "./ch4/legal-driving-age.js"
+    "legalDrivingAge-js": "./ch4/legal-driving-age.js",
+    "bloodAlcoholCalculator-js": "./ch4/blood-alcohol-calculator.js"
   }
 }

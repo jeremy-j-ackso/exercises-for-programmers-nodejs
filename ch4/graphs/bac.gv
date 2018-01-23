@@ -1,0 +1,25 @@
+digraph BAC {
+  node [shape=box]; ask_weight; ask_gender; ask_drink_number; ask_alcohol; ask_time_last; can_drive; cannot_drive;
+  node [shape=parallelogram]; validate_strings; validate_numeric_strings; calculate_bac
+  node [shape=diamond]; decide_legal;
+  node [shape=ellipse]; output_bac; output_legality;
+
+  legal_message [shape=ellipse, label="It is legal for\nyou to drive."]
+  not_legal_message [shape=ellipse, label="It is not legal\nfor you to drive."]
+
+  ask_weight -> ask_gender -> ask_drink_number -> ask_alcohol -> ask_time_last
+  ask_time_last -> validate_strings
+  ask_time_last -> validate_numeric_strings
+  validate_strings -> calculate_bac
+  validate_numeric_strings -> calculate_bac
+  calculate_bac -> decide_legal
+  decide_legal -> can_drive [label="legal"]
+  can_drive -> legal_message [style=dotted]
+  decide_legal -> cannot_drive [label="not legal"]
+  cannot_drive -> not_legal_message [style=dotted]
+  can_drive -> output_bac
+  cannot_drive -> output_bac
+  legal_message -> output_legality [style=dotted]
+  not_legal_message -> output_legality [style=dotted]
+  output_bac -> output_legality
+}

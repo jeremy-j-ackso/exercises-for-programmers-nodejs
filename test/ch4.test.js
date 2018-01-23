@@ -19,6 +19,14 @@ const {
   build16string,
 } = require('../ch4/ex16.js')
 
+const {
+  calculateBAC,
+  isLegal,
+  buildBacString,
+  buildLegalString,
+  buildBacOutput,
+} = require('../ch4/ex17.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -143,6 +151,101 @@ describe('Chapter 4', () => {
 
         false_test.forEach((test) => {
           expect(build16string(test)).to.equal('You are not old enough to legally drive.')
+        })
+      })
+    })
+  })
+
+  describe('ex17.js', () => {
+    describe('calculateBAC()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [170, 'Male', 84, 5, 4.5], expect: '0.11' },
+          { args: [100, 'Male', 10, 10, 1], expect: '0.06' },
+          { args: [100, 'Female', 20, 10, 2], expect: '0.13' },
+          { args: [120, 'Female', 20, 10, 1], expect: '0.11' },
+        ]
+
+        ref_test.forEach((test) => {
+          const [
+            weight,
+            gender,
+            oz_drinks,
+            alc_by_volume,
+            time_since_last,
+          ] = test.args
+          expect(calculateBAC(weight, gender, oz_drinks, alc_by_volume, time_since_last))
+            .to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('isLegal()', () => {
+      it('should return `true` if argument < 0.08', () => {
+        let true_test = ['0.01', '0.06', '0.07']
+
+        true_test.forEach((test) => {
+          expect(isLegal(test)).to.be.ok()
+        })
+      })
+
+      it('should return `false` if argument >= 0.08', () => {
+        let false_test = ['0.08', '0.09', '0.15']
+
+        false_test.forEach((test) => {
+          expect(isLegal(test)).to.not.be.ok()
+        })
+      })
+    })
+
+    describe('buildBacString()', () => {
+      it('should return value equal to reference', () => {
+        let ref_test = [
+          { arg: '0.01', expect: 'Your BAC is 0.01' },
+          { arg: '0.08', expect: 'Your BAC is 0.08' },
+          { arg: '0.11', expect: 'Your BAC is 0.11' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(buildBacString(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('buildLegalString()', () => {
+      it('should return value equal to reference', () => {
+        let ref_test = [
+          { arg: '0.01', expect: 'It is legal for you to drive.' },
+          { arg: '0.07', expect: 'It is legal for you to drive.' },
+          { arg: '0.08', expect: 'It is not legal for you to drive.' },
+          { arg: '0.10', expect: 'It is not legal for you to drive.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(buildLegalString(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('buildBacOutput()', () => {
+      it('should return value equal to reference', () => {
+        let ref_test = [
+          { args: ['170', 'Male', '84', '5', '4.5'], expect: 'Your BAC is 0.11\nIt is not legal for you to drive.' },
+          { args: ['100', 'Male', '10', '10', '1'], expect: 'Your BAC is 0.06\nIt is legal for you to drive.' },
+          { args: ['100', 'Female', '20', '10', '2'], expect: 'Your BAC is 0.13\nIt is not legal for you to drive.' },
+          { args: ['120', 'Female', '20', '10', '1'], expect: 'Your BAC is 0.11\nIt is not legal for you to drive.' },
+        ]
+
+        ref_test.forEach((test) => {
+          const [
+            weight,
+            gender,
+            oz_drinks,
+            alc_by_volume,
+            time_since_last,
+          ] = test.args
+          expect(buildBacOutput(weight, gender, oz_drinks, alc_by_volume, time_since_last))
+            .to.equal(test.expect)
         })
       })
     })
