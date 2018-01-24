@@ -27,6 +27,16 @@ const {
   buildBacOutput,
 } = require('../ch4/ex17.js')
 
+const {
+  f_c,
+  c_f,
+  f_or_c,
+  switch_scale,
+  switch_calc,
+  build_cf_string,
+  proper_scale,
+} = require('../ch4/ex18.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -247,6 +257,121 @@ describe('Chapter 4', () => {
           expect(buildBacOutput(weight, gender, oz_drinks, alc_by_volume, time_since_last))
             .to.equal(test.expect)
         })
+      })
+    })
+  })
+
+  describe('ex18.js', () => {
+    describe('f_c()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: 100, expect: 38 },
+          { arg: 0, expect: -18 },
+          { arg: 212, expect: 100 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(f_c(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('c_f()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: 38, expect: 100 },
+          { arg: -18, expect: 0 },
+          { arg: 100, expect: 212 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(c_f(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('switch_scale', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: 'c', expect: 'Fahrenheit' },
+          { arg: 'f', expect: 'Celsius' }
+        ]
+
+        ref_test.forEach((test) => {
+          expect(switch_scale(test.arg)).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error on invalid input', () => {
+        expect(switch_scale).withArgs('a').to.throwError('source scale must be either f or c')
+      })
+    })
+
+    describe('switch_calc', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: ['c', 100], expect: 212 },
+          { arg: ['f', 212], expect: 100 }
+        ]
+
+        ref_test.forEach((test) => {
+          expect(switch_calc(test.arg[0], test.arg[1])).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error on invalid input', () => {
+        expect(switch_calc).withArgs('a', 123).to.throwError('source scale must be either f or c')
+      })
+    })
+
+    describe('f_or_c()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['f', '0'], expect: { scale: 'Celsius', temp: -18 } },
+          { args: ['f', '100'], expect: { scale: 'Celsius', temp: 38 } },
+          { args: ['f', '212'], expect: { scale: 'Celsius', temp: 100 } },
+          { args: ['c', '38'], expect: { scale: 'Fahrenheit', temp: 100 } },
+          { args: ['c', '-18'], expect: { scale: 'Fahrenheit', temp: 0 } },
+          { args: ['c', '100'], expect: { scale: 'Fahrenheit', temp: 212 } },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(f_or_c(test.args[0], test.args[1])).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('build_cf_string()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['f', '0'], expect: 'The temperature in Celsius is -18.' },
+          { args: ['f', '212'], expect: 'The temperature in Celsius is 100.' },
+          { args: ['c', '100'], expect: 'The temperature in Fahrenheit is 212.' },
+          { args: ['c', '0'], expect: 'The temperature in Fahrenheit is 32.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(build_cf_string(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('proper_scale()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: 'f', expect: 'Fahrenheit' },
+          { arg: 'F', expect: 'Fahrenheit' },
+          { arg: 'c', expect: 'Celsius' },
+          { arg: 'C', expect: 'Celsius' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(proper_scale(test.arg)).to.equal(test.expect)
+        })
+      })
+
+      it('should throw an error on invalid input', () => {
+        expect(proper_scale).withArgs('a').to.throwError('source scale must be either f or c')
       })
     })
   })

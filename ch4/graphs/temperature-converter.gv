@@ -1,0 +1,16 @@
+digraph tc {
+  ask_convert_switch [shape=box, label="Choose\nF->C or C->F"]
+  choose_temp_request [shape=diamond, label="Choose F or C\nas source"]
+  f_c [shape=parallelogram, label="F->C"]
+  c_f [shape=parallelogram, label="C->F"]
+  output_f_string [shape=parallelogram, label="build\nC string"]
+  output_c_string [shape=parallelogram, label="build\nF string"]
+  print_output [shape=ellipse, label="print\noutput string"]
+
+  ask_convert_switch -> choose_temp_request
+  choose_temp_request -> f_c [label="fahrenheit\nto\ncelsius"]
+  f_c -> output_f_string -> print_output
+
+  choose_temp_request -> c_f [label="celsius\nto\nfahrenheit"]
+  c_f -> output_c_string -> print_output
+}
