@@ -1,0 +1,19 @@
+digraph bmi {
+  ask_height [shape=box, label="What is your\nheight in inches?"]
+  ask_weight [shape=box, label="what is your\nweight in pounds?"]
+  calculate_bmi [shape=parallelogram, label="Calculate BMI"]
+  message_under [shape=parallelogram, label="You are\nunderweight..."]
+  message_normal [shape=parallelogram, label="You are within the\nideal weight range."]
+  message_over [shape=parallelogram, label="You are\noverweight..."]
+  print_bmi [shape=ellipse, label="Print the BMI message."]
+  print_uno_message [shape=ellipse, label="Print the\nunder/normal/over\nmessage."]
+
+  ask_height -> ask_weight -> calculate_bmi
+  calculate_bmi -> message_under [label="bmi < 18.5"]
+  calculate_bmi -> message_normal [label="18.5 <= bmi <= 25"]
+  calculate_bmi -> message_over [label="bmi > 25"]
+  message_under -> print_bmi
+  message_normal -> print_bmi
+  message_over -> print_bmi
+  print_bmi -> print_uno_message
+}

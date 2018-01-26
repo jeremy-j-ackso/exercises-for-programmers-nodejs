@@ -42,6 +42,7 @@
     "passwordValidation-js": "./ch4/password-validation.js",
     "legalDrivingAge-js": "./ch4/legal-driving-age.js",
     "bloodAlcoholCalculator-js": "./ch4/blood-alcohol-calculator.js",
-    "temperatureConverter-js": "./ch4/temperature-converter.js"
+    "temperatureConverter-js": "./ch4/temperature-converter.js",
+    "bmiCalculator-js": "./ch4/bmi-calculator.js"
   }
 }

@@ -37,6 +37,12 @@ const {
   proper_scale,
 } = require('../ch4/ex18.js')
 
+const {
+  calculate_bmi,
+  onu,
+  build_bmi_string,
+} = require('../ch4/ex19.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -372,6 +378,53 @@ describe('Chapter 4', () => {
 
       it('should throw an error on invalid input', () => {
         expect(proper_scale).withArgs('a').to.throwError('source scale must be either f or c')
+      })
+    })
+  })
+
+  describe('ex19.js', () => {
+    describe('calculate_bmi()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [72, 240], expect: '32.5' },
+          { args: [74, 240], expect: '30.8' },
+          { args: [74, 170], expect: '21.8' },
+          { args: [60, 100], expect: '19.5' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(calculate_bmi(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('onu()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: '32.5', expect: 'Your BMI is 32.5.\nYou are overweight. You should see your doctor.' },
+          { arg: '20', expect: 'Your BMI is 20.\nYou are within the ideal weight range.' },
+          { arg: '12.5', expect: 'Your BMI is 12.5.\nYou are underweight. You should see your doctor.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(onu(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('build_bmi_string()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['72', '240'], expect: 'Your BMI is 32.5.\nYou are overweight. You should see your doctor.' },
+          { args: ['74', '240'], expect: 'Your BMI is 30.8.\nYou are overweight. You should see your doctor.' },
+          { args: ['74', '170'], expect: 'Your BMI is 21.8.\nYou are within the ideal weight range.' },
+          { args: ['60', '100'], expect: 'Your BMI is 19.5.\nYou are within the ideal weight range.' },
+          { args: ['80', '100'], expect: 'Your BMI is 11.0.\nYou are underweight. You should see your doctor.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(build_bmi_string(test.args[0], test.args[1])).to.equal(test.expect)
+        })
       })
     })
   })
