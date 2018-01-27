@@ -50,6 +50,11 @@ const {
   multistate_tax_total_string,
 } = require('../ch4/ex20.js')
 
+const {
+  num_2_name,
+  mon_string,
+} = require('../ch4/ex21.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -495,6 +500,61 @@ describe('Chapter 4', () => {
         ref_test.forEach((test) => {
           expect(multistate_tax_total_string(test.args[0], test.args[1], test.args[2]))
             .to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex21.js', () => {
+    describe('num_2_name()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: '1', expect: 'January' },
+          { arg: '2', expect: 'February' },
+          { arg: '3', expect: 'March' },
+          { arg: '4', expect: 'April' },
+          { arg: '5', expect: 'May' },
+          { arg: '6', expect: 'June' },
+          { arg: '7', expect: 'July' },
+          { arg: '8', expect: 'August' },
+          { arg: '9', expect: 'September' },
+          { arg: '10', expect: 'October' },
+          { arg: '11', expect: 'November' },
+          { arg: '12', expect: 'December' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(num_2_name(test.arg)).to.equal(test.expect)
+        })
+      })
+
+      it('should produce throw an error on invalid input', () => {
+        let err_test = [0, 13]
+        err_test.forEach((test) => {
+          expect(num_2_name).withArgs(test).to.throwError('Months numbers must be in the range of 1-12.')
+        })
+      })
+    })
+
+    describe('mon_string()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: '1', expect: 'The name of the month is January' },
+          { arg: '2', expect: 'The name of the month is February' },
+          { arg: '3', expect: 'The name of the month is March' },
+          { arg: '4', expect: 'The name of the month is April' },
+          { arg: '5', expect: 'The name of the month is May' },
+          { arg: '6', expect: 'The name of the month is June' },
+          { arg: '7', expect: 'The name of the month is July' },
+          { arg: '8', expect: 'The name of the month is August' },
+          { arg: '9', expect: 'The name of the month is September' },
+          { arg: '10', expect: 'The name of the month is October' },
+          { arg: '11', expect: 'The name of the month is November' },
+          { arg: '12', expect: 'The name of the month is December' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(mon_string(test.arg)).to.equal(test.expect)
         })
       })
     })

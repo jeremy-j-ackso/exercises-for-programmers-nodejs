@@ -1,0 +1,7 @@
+digraph n2n {
+  enter_mon_num [shape=box, label="Please enter the\nnumber of the month:"]
+  convert_num_2_mon [shape=parallelogram, label="Convert number\n1-12 to month"]
+  print_output [shape=ellipse, label="The name of the\nmonth is XXXX."]
+
+  enter_mon_num -> convert_num_2_mon -> print_output
+}
