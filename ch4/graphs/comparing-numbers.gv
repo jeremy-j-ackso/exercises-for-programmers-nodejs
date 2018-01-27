@@ -1,0 +1,8 @@
+digraph cn {
+  node [shape=box]; enter_1st [label="Enter the\nfirst number"]; enter_2nd [label="Enter the\nsecond number"]; enter_3rd [label="Enter the\nthird number"];
+  choose_max [shape=parallelogram, label="Compare two values.\nChoose largest."]
+  print_output [shape=ellipse, label="The largest\nvalue is X."]
+
+  enter_1st -> enter_2nd -> enter_3rd -> choose_max -> print_output
+  choose_max -> choose_max [style=dotted]
+}

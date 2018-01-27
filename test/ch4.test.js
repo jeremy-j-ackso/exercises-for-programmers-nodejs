@@ -55,6 +55,15 @@ const {
   mon_string,
 } = require('../ch4/ex21.js')
 
+const {
+  max_val,
+  build_numeric_set,
+  arr_2_set,
+  compareLength_arr_2_set,
+  all_ints,
+  build_compare_string,
+} = require('../ch4/ex22.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -555,6 +564,124 @@ describe('Chapter 4', () => {
 
         ref_test.forEach((test) => {
           expect(mon_string(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex22.js', () => {
+    describe('max_val()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: new Set([1, 2, 3]), expect: 3 },
+          { arg: new Set([6, 5, 4]), expect: 6 },
+          { arg: new Set([10, 20, 3]), expect: 20 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(max_val(test.arg)).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('build_numeric_set()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: new Set(['1', '2', '3']), expect: new Set([1, 2, 3]) },
+          { arg: new Set(['6', '5', '4']), expect: new Set([6, 5, 4]) },
+          { arg: new Set(['10', '20', '3']), expect: new Set([10, 20, 3]) },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(build_numeric_set(test.arg)).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('arr_2_set()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: ['1', '2', '3'], expect: new Set(['1', '2', '3']) },
+          { arg: ['a', 'b', 'c'], expect: new Set(['a', 'b', 'c']) },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(arr_2_set(test.arg)).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('compareLength_arr_2_set()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [['1', '2', '3'], new Set(['1', '2', '3'])], expect: true },
+          { args: [['1', '2'], new Set(['1', '2', '3'])], expect: false },
+          { args: [['1', '2', '3'], new Set(['1', '2'])], expect: false },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(compareLength_arr_2_set(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+
+    describe('all_ints()', () => {
+      it('should return true if all values in set are integers', () => {
+        let true_test = [
+          ['1', '2', '3'],
+        ]
+
+        true_test.forEach((test) => {
+          expect(all_ints(test)).to.be.ok()
+        })
+      })
+
+      it('should return false if all value in set are not integers', () => {
+        let false_test = [
+          ['1', '1', '1.11'],
+          ['1.11', '1', '1'],
+          ['1', '1.11', '1'],
+        ]
+
+        false_test.forEach((test) => {
+          expect(all_ints(test)).to.not.be.ok()
+        })
+      })
+    })
+
+    describe('build_compare_string()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: ['1', '2', '3'], expect: 'The largest number is 3.' },
+          { arg: ['3', '2', '1'], expect: 'The largest number is 3.' },
+          { arg: ['1', '3', '2'], expect: 'The largest number is 3.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(build_compare_string(test.arg)).to.equal(test.expect)
+        })
+      })
+
+      it('should produce an error message if two or more of the inputs are the same', () => {
+        let err_test = [
+          ['1', '1', '2'],
+          ['1', '1', '1'],
+        ]
+
+        err_test.forEach((test) => {
+          expect(build_compare_string).withArgs(test).to.throwError('all input values must be different')
+        })
+      })
+
+      it('should produce an error if any input is not an integer', () => {
+        let err_test = [
+          ['1', '2.2', '3'],
+          ['1', '2.2.2', '3'],
+          ['1', 'a', '3'],
+        ]
+
+        err_test.forEach((test) => {
+          expect(build_compare_string).withArgs(test).to.throwError('all input values must be integers')
         })
       })
     })
