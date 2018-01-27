@@ -1,0 +1,33 @@
+digraph mstc{
+  ask_order_amt [shape=box, label="What is the\norder amount?"]
+  ask_state [shape=diamond, label="What state do\nyou live in?"]
+
+  illinois_tax [shape=box, label="Calculate at 8%"]
+  
+  wisconsin_base [shape=box, label="Calculate at 5%."]
+  ask_county [shape=diamond, label="What county do\nyou live in?"]
+  eau_claire_tax [shape=box, label="Add an additional\n$0.0005 in tax."]
+  dunn_tax [shape=box, label="Add an additional\n$0.0004 in tax."]
+  wisconsin_tax [shape=parallelogram, label="5% + (County Specific Tax)"]
+
+  print_tax [shape=ellipse, label="The tax is $X.XX."]
+  print_total [shape=ellipse, label="The total is $X.XX."]
+
+  ask_order_amt -> ask_state
+
+  ask_state -> print_total [label="Not WI\nor IL"]
+
+  ask_state -> illinois_tax [label="IL"]
+  illinois_tax -> print_tax
+
+  ask_state -> wisconsin_base [label="WI"]
+  wisconsin_base -> ask_county
+  ask_county -> wisconsin_tax [label="Not Dunn or\nEau Claire"]
+  ask_county -> eau_claire_tax [label="Eau Claire"]
+  ask_county -> dunn_tax [label="Dunn"]
+  eau_claire_tax -> wisconsin_tax
+  dunn_tax -> wisconsin_tax
+  wisconsin_tax -> print_tax
+
+  print_tax -> print_total
+}

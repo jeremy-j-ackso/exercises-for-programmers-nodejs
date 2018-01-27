@@ -43,6 +43,7 @@
     "legalDrivingAge-js": "./ch4/legal-driving-age.js",
     "bloodAlcoholCalculator-js": "./ch4/blood-alcohol-calculator.js",
     "temperatureConverter-js": "./ch4/temperature-converter.js",
-    "bmiCalculator-js": "./ch4/bmi-calculator.js"
+    "bmiCalculator-js": "./ch4/bmi-calculator.js",
+    "multistateSalesTaxCalculator-js": "./ch4/multistate-sales-tax-calculator.js"
   }
 }

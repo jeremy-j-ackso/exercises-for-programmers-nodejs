@@ -43,6 +43,13 @@ const {
   build_bmi_string,
 } = require('../ch4/ex19.js')
 
+const {
+  illinois_tax,
+  wisconsin_tax,
+  state_tax,
+  multistate_tax_total_string,
+} = require('../ch4/ex20.js')
+
 describe('Chapter 4', () => {
   describe('ex14.js', () => {
     describe('is_wi()', () => {
@@ -424,6 +431,70 @@ describe('Chapter 4', () => {
 
         ref_test.forEach((test) => {
           expect(build_bmi_string(test.args[0], test.args[1])).to.equal(test.expect)
+        })
+      })
+    })
+  })
+
+  describe('ex20.js', () => {
+    describe('illinois_tax()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { arg: 1.00, expect: 0.08 },
+          { arg: 1.01, expect: 0.0808 },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(illinois_tax(test.arg)).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('wisconsin_tax()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: [1.00, 'river'], expect: [0.049, 0.051] },
+          { args: [1.01, 'river'], expect: [0.05049, 0.0506] },
+          { args: [1.00, 'dunn'], expect: [0.05039, 0.05041] },
+          { args: [1.01, 'dunn'], expect: [0.05089, 0.05091] },
+          { args: [1.00, 'eau claire'], expect: [0.05049, 0.05051] },
+          { args: [1.01, 'eau claire'], expect: [0.0509, 0.0511] },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(wisconsin_tax(test.args[0], test.args[1])).to.be.greaterThan(test.expect[0])
+          expect(wisconsin_tax(test.args[0], test.args[1])).to.be.lessThan(test.expect[1])
+        })
+      })
+    })
+
+    describe('state_tax()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['1.00', 'hi', ''], expect: [0.0, ''] },
+          { args: ['1.00', 'il', ''], expect: [0.08, 'The tax is $0.08.\n'] },
+          { args: ['1.00', 'wi', 'dunn'], expect: [0.05, 'The tax is $0.05.\n'] },
+          { args: ['1.00', 'wi', 'eau claire'], expect: [0.05, 'The tax is $0.05.\n'] },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(state_tax(test.args[0], test.args[1], test.args[2])).to.eql(test.expect)
+        })
+      })
+    })
+
+    describe('multistate_tax_total_string()', () => {
+      it('should produce values equal to reference', () => {
+        let ref_test = [
+          { args: ['1.00', 'hi', ''], expect: 'The total is $1.00.' },
+          { args: ['1.00', 'il', ''], expect: 'The tax is $0.08.\nThe total is $1.08.' },
+          { args: ['1.00', 'wi', 'dunn'], expect: 'The tax is $0.05.\nThe total is $1.05.' },
+          { args: ['1.00', 'wi', 'eau claire'], expect: 'The tax is $0.05.\nThe total is $1.05.' },
+        ]
+
+        ref_test.forEach((test) => {
+          expect(multistate_tax_total_string(test.args[0], test.args[1], test.args[2]))
+            .to.equal(test.expect)
         })
       })
     })
