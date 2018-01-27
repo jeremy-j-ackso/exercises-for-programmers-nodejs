@@ -20,7 +20,7 @@ function num_2_name(num) {
     [12, 'December'],
   ])
 
-  if (mon_map === undefined) throw new Error('Months numbers must be in the range of 1-12.')
+  if (!mon_map.has(p_num)) throw new Error('Months numbers must be in the range of 1-12.')
 
   return mon_map.get(p_num)
 }
